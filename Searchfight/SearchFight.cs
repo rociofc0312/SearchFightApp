@@ -6,29 +6,19 @@ namespace Searchfight
 {
     public class SearchFight
     {
-        public ISearchFightService _searchFightService { get; }
-        public IConsolePrintService _consolePrintService { get; }
+        public IQueryReportService _queryReportService { get; }
 
-        public SearchFight(ISearchFightService searchFightService, IConsolePrintService consolePrintService)
+        public SearchFight(IQueryReportService consolePrintService)
         {
-            _searchFightService = searchFightService;
-            _consolePrintService = consolePrintService;
+            _queryReportService = consolePrintService;
         }
 
         public void Run(string[] args)
         {
             if (args.Length == 0)
                 Console.ReadLine()?.Split(" ");
-            ExecuteSearchFight(args);
-        }
-
-        private void ExecuteSearchFight(string[] args)
-        {
-            var results = _searchFightService.SearchQueries(args.ToList());
-            var winners = _searchFightService.QueryWinnersBySearchEngine(results);
-            var totalWinner = _searchFightService.GetTotalWinner(results);
-
-            _consolePrintService.BuildConsoleResponse(results, winners, totalWinner);
+            var report = _queryReportService.ExecuteSearchFight(args.ToList());
+            _queryReportService.BuildConsoleResponse(report);
         }
     }
 }

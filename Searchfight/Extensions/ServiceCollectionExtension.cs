@@ -16,7 +16,7 @@ namespace Searchfight.Extensions
         {
             services.AddTransient<SearchFight>();
             services.AddTransient<ISearchFightService, SearchFightService>();
-            services.AddTransient<IConsolePrintService, ConsolePrintService>();
+            services.AddTransient<IQueryReportService, QueryReportService>();
             return services;
         }
 

@@ -1,8 +1,7 @@
 ﻿using Microsoft.Extensions.Options;
 using RestSharp;
-using Searchfight.Models;
 using Searchfight.Models.Configurations;
-using Searchfight.Models.Responses;
+using Searchfight.Models.Responses.ApiResponse;
 using Searchfight.Services.ApiClient.Interfaces;
 using System;
 
@@ -10,27 +9,22 @@ namespace Searchfight.Services.ApiClient
 {
     public class GoogleSearchApiClient : BaseSearchApiClient, IGenericSearchApiClient
     {
-        private string Cx;
-        public GoogleSearchApiClient(IOptions<GoogleApi> googleApi)
+        private readonly string Cx;
+        private readonly IOptions<GoogleApi> _googleApi;
+
+        public GoogleSearchApiClient(IOptions<GoogleApi> googleApi) : base(googleApi.Value)
         {
-            BaseUrl = googleApi.Value.Host;
-            Key = googleApi.Value.Key;
-            Cx = googleApi.Value.Cx;
-            Name = googleApi.Value.Name;
+            _googleApi = googleApi;
+            Cx = _googleApi.Value.Cx;
         }
 
-        public QueryResult GetResults(string query)
+        public string Name { get => _googleApi.Value.Name; }
+
+        public long GetResults(string query)
         {
             var request = new RestRequest($"?key={Key}&cx={Cx}&q={query}");
-
             var response = SendRequest<GoogleSearchApiResponse>(Method.GET, request);
-            var searchResult = new QueryResult
-            {
-                Engine = Name,
-                Query = query,
-                TotalResults = Convert.ToInt64(response.SearchInformation.TotalResults)
-            };
-            return searchResult;
+            return response != null ? Convert.ToInt64(response.SearchInformation.TotalResults) : 0;
         }
     }
 }

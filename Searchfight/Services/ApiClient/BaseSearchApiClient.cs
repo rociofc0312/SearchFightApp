@@ -1,5 +1,6 @@
 ﻿using RestSharp;
-using System;
+using Searchfight.Models.Configurations;
+using System.Net;
 
 namespace Searchfight.Services.ApiClient
 {
@@ -7,15 +8,19 @@ namespace Searchfight.Services.ApiClient
     {
         protected string BaseUrl;
         protected string Key;
-        protected string Name;
+        public BaseSearchApiClient(BaseApi baseApi)
+        {
+            BaseUrl = baseApi.Host;
+            Key = baseApi.Key;
+        }
 
-        protected T SendRequest<T>(Method method, RestRequest request, object body = null) where T : new()
+        protected T SendRequest<T>(Method method, RestRequest request, object body = null) where T : class
         {
             var client = new RestClient(BaseUrl);
             if (body != null)
                 request.AddJsonBody(body);
             IRestResponse<T> response = client.Execute<T>(request, method);
-            return response.Data;
+            return response.StatusCode != HttpStatusCode.OK ? null : response.Data;
         }
     }
 }

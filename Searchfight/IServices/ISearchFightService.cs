@@ -1,4 +1,4 @@
-﻿using Searchfight.Models;
+﻿using Searchfight.Models.Responses.ServiceResponse;
 using System.Collections.Generic;
 
 namespace Searchfight.IServices

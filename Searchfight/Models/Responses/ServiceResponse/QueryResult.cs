@@ -1,4 +1,4 @@
-﻿namespace Searchfight.Models
+﻿namespace Searchfight.Models.Responses.ServiceResponse
 {
     public class QueryResult
     {

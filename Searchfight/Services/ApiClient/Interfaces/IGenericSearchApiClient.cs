@@ -1,9 +1,8 @@
-﻿using Searchfight.Models;
-
-namespace Searchfight.Services.ApiClient.Interfaces
+﻿namespace Searchfight.Services.ApiClient.Interfaces
 {
     public interface IGenericSearchApiClient
     {
-        QueryResult GetResults(string query);
+        string Name { get; }
+        long GetResults(string query);
     }
 }

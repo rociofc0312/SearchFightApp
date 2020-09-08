@@ -1,4 +1,4 @@
-﻿namespace Searchfight.Models.Responses
+﻿namespace Searchfight.Models.Responses.ApiResponse
 {
     public class GoogleSearchApiResponse
     {
