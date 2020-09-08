@@ -41,8 +41,6 @@ namespace Searchfight
         {
             Log.Logger = new LoggerConfiguration()
                 .ReadFrom.Configuration(configuration)
-                .Enrich.FromLogContext()
-                .WriteTo.Console()
                 .CreateLogger();
         }
     }

@@ -1,4 +1,5 @@
 ﻿using Searchfight.IServices;
+using Serilog;
 using System;
 using System.Linq;
 
@@ -17,8 +18,15 @@ namespace Searchfight
         {
             if (args.Length == 0)
                 Console.ReadLine()?.Split(" ");
-            var report = _queryReportService.ExecuteSearchFight(args.ToList());
-            _queryReportService.BuildConsoleResponse(report);
+            try
+            {
+                var report = _queryReportService.ExecuteSearchFight(args.ToList());
+                _queryReportService.BuildConsoleResponse(report);
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"Error found: {ex}");
+            }
         }
     }
 }

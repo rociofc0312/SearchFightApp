@@ -32,20 +32,20 @@ namespace Searchfight.Services
             return list;
         }
 
-        public List<QueryResult> QueryWinnersBySearchEngine(List<QueryResult> searchResults)
+        public List<QueryResult> QueryWinnersBySearchEngine(List<QueryResult> queryResults)
         {
             var winners = new List<QueryResult>();
-            var groupedResults = searchResults.GroupBy(x => x.Engine).ToList();
-            foreach(var result in groupedResults)
+            var groupedWinners = queryResults.GroupBy(x => x.Engine).ToList();
+            foreach(var winner in groupedWinners)
             {
-                winners.Add(result.Aggregate((i1, i2) => i1.TotalResults > i2.TotalResults ? i1 : i2));
+                winners.Add(winner.Aggregate((i1, i2) => i1.TotalResults > i2.TotalResults ? i1 : i2));
             }
             return winners;
         }
 
-        public string GetTotalWinner(List<QueryResult> searchResults)
+        public string GetTotalWinner(List<QueryResult> queryResults)
         {
-            var groupedResults = searchResults.GroupBy(x => x.Query)
+            var groupedResults = queryResults.GroupBy(x => x.Query)
                 .Select(g => new { Id = g.Key, TotalResults = g.Sum(y => y.TotalResults)});
 
             var totalWinner = groupedResults.Aggregate((i1, i2) => i1.TotalResults > i2.TotalResults ? i1 : i2);
