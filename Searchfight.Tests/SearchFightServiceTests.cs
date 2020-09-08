@@ -11,25 +11,34 @@ namespace Searchfight.Tests
     [TestFixture]
     public class SearchFightServiceTests
     {
-        private GoogleSearchApiClientMockBuilder _googleSearchApiClientMockBuilder;
-        private BingSearchApiClientMockBuilder _bingSearchApiClientMockBuilder;
+        private CommonSearchApiClientMockBuilder _googleSearchApiClientMockBuilder;
+        private CommonSearchApiClientMockBuilder _bingSearchApiClientMockBuilder;
         private QueryReportService _queryReportService;
 
         [SetUp]
         public void Setup()
         {
-            _googleSearchApiClientMockBuilder = new GoogleSearchApiClientMockBuilder();
-            _bingSearchApiClientMockBuilder = new BingSearchApiClientMockBuilder();
-            IEnumerable<IGenericSearchApiClient> clients = new List<IGenericSearchApiClient> { _googleSearchApiClientMockBuilder.Build(), _bingSearchApiClientMockBuilder.Build() };
+            _googleSearchApiClientMockBuilder = new CommonSearchApiClientMockBuilder();
+            _bingSearchApiClientMockBuilder = new CommonSearchApiClientMockBuilder();
+            IEnumerable<ICommonSearchApiClient> clients = BuildIEnumerableSearchClients();
             var searchFightService = new SearchFightService(clients);
             _queryReportService = new QueryReportService(searchFightService);
+        }
+
+        private List<ICommonSearchApiClient> BuildIEnumerableSearchClients()
+        {
+            return new List<ICommonSearchApiClient>
+            {
+                _googleSearchApiClientMockBuilder.WithEngineName("Google").Build(),
+                _bingSearchApiClientMockBuilder.WithEngineName("Bing").Build()
+            };
         }
 
         [Test]
         public void SearchQueries_ValidQuery_ReturnValidReportData()
         {
-            _googleSearchApiClientMockBuilder.WithEngineName().WithValidLongData();
-            _bingSearchApiClientMockBuilder.WithEngineName().WithValidLongData();
+            _googleSearchApiClientMockBuilder.WithValidLongData();
+            _bingSearchApiClientMockBuilder.WithValidLongData();
 
             var report = _queryReportService.ExecuteSearchFight(new List<string> { ".NET", "Java" });
 
@@ -42,8 +51,8 @@ namespace Searchfight.Tests
         [Test]
         public void QueryWinnersBySearchEngine_QueryWithNoResultsInOneEngine_ReturnValidReportData()
         {
-            _bingSearchApiClientMockBuilder.WithEngineName().WithValidLongData();
-            _googleSearchApiClientMockBuilder.WithEngineName().WithNoData();
+            _bingSearchApiClientMockBuilder.WithValidLongData();
+            _googleSearchApiClientMockBuilder.WithNoData();
 
             var report = _queryReportService.ExecuteSearchFight(new List<string> { "no results query", "Java" });
 

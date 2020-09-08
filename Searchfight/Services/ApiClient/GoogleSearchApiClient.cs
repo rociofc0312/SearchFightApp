@@ -7,7 +7,7 @@ using System;
 
 namespace Searchfight.Services.ApiClient
 {
-    public class GoogleSearchApiClient : BaseSearchApiClient, IGenericSearchApiClient
+    public class GoogleSearchApiClient : BaseSearchApiClient, ICommonSearchApiClient
     {
         private readonly string Cx;
         private readonly IOptions<GoogleApi> _googleApi;

@@ -8,8 +8,8 @@ namespace Searchfight.Services
 {
     public class SearchFightService : ISearchFightService
     {
-        private readonly IEnumerable<IGenericSearchApiClient> _searchApiClients;
-        public SearchFightService(IEnumerable<IGenericSearchApiClient> searchApiClients)
+        private readonly IEnumerable<ICommonSearchApiClient> _searchApiClients;
+        public SearchFightService(IEnumerable<ICommonSearchApiClient> searchApiClients)
         {
             _searchApiClients = searchApiClients;
         }

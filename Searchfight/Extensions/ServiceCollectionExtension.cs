@@ -22,8 +22,8 @@ namespace Searchfight.Extensions
 
         public static IServiceCollection AddCustomApiClients(this IServiceCollection services)
         {
-            services.AddTransient<IGenericSearchApiClient, GoogleSearchApiClient>();
-            services.AddTransient<IGenericSearchApiClient, BingSearchApiClient>();
+            services.AddTransient<ICommonSearchApiClient, GoogleSearchApiClient>();
+            services.AddTransient<ICommonSearchApiClient, BingSearchApiClient>();
             return services;
         }
 

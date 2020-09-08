@@ -1,6 +1,6 @@
 ﻿namespace Searchfight.Services.ApiClient.Interfaces
 {
-    public interface IGenericSearchApiClient
+    public interface ICommonSearchApiClient
     {
         string Name { get; }
         long GetResults(string query);

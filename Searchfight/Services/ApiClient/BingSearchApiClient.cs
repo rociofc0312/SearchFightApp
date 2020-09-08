@@ -6,7 +6,7 @@ using Searchfight.Services.ApiClient.Interfaces;
 
 namespace Searchfight.Services.ApiClient
 {
-    public class BingSearchApiClient : BaseSearchApiClient, IGenericSearchApiClient
+    public class BingSearchApiClient : BaseSearchApiClient, ICommonSearchApiClient
     {
         private readonly string Cc;
         private readonly IOptions<BingApi> _bingApi;
