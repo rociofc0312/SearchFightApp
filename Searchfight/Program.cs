@@ -26,7 +26,7 @@ namespace Searchfight
                 .Build();
 
             var svc = ActivatorUtilities.CreateInstance<SearchFight>(host.Services);
-            svc.RunAsync().GetAwaiter().GetResult();
+            svc.Run(args);
         }
 
         static IConfiguration BuildConfiguration()

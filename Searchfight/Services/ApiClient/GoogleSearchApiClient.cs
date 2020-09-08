@@ -1,27 +1,36 @@
 ﻿using Microsoft.Extensions.Options;
+using RestSharp;
+using Searchfight.Models;
 using Searchfight.Models.Configurations;
 using Searchfight.Models.Responses;
 using Searchfight.Services.ApiClient.Interfaces;
 using System;
-using System.Net.Http;
-using System.Threading.Tasks;
 
 namespace Searchfight.Services.ApiClient
 {
-    public class GoogleSearchApiClient : BaseSearchApiClient, IGenericSearchApiClient<GoogleSearchApiResponse>
+    public class GoogleSearchApiClient : BaseSearchApiClient, IGenericSearchApiClient
     {
-        private readonly GoogleApi _googleSettings;
-        public GoogleSearchApiClient(HttpClient client, IOptions<GoogleApi> googleSettings) : base(client)
+        private string Cx;
+        public GoogleSearchApiClient(IOptions<GoogleApi> googleApi)
         {
-            _googleSettings = googleSettings.Value;
-            BaseUri = $"{_googleSettings.Host}";
+            BaseUrl = googleApi.Value.Host;
+            Key = googleApi.Value.Key;
+            Cx = googleApi.Value.Cx;
+            Name = googleApi.Value.Name;
         }
 
-        public async Task<GoogleSearchApiResponse> GetResults(string query)
+        public QueryResult GetResults(string query)
         {
-            var request = new UriBuilder(BaseUri);
-            request.Query = $"key={_googleSettings.Key}&cx={_googleSettings.Cx}&q={query}";
-            return await ExecuteGetAsync<GoogleSearchApiResponse>(request.Uri);
+            var request = new RestRequest($"?key={Key}&cx={Cx}&q={query}");
+
+            var response = SendRequest<GoogleSearchApiResponse>(Method.GET, request);
+            var searchResult = new QueryResult
+            {
+                Engine = Name,
+                Query = query,
+                TotalResults = Convert.ToInt64(response.SearchInformation.TotalResults)
+            };
+            return searchResult;
         }
     }
 }

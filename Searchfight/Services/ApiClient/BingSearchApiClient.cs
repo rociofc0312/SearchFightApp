@@ -1,27 +1,37 @@
 ﻿using Microsoft.Extensions.Options;
+using RestSharp;
+using Searchfight.Models;
 using Searchfight.Models.Configurations;
 using Searchfight.Models.Responses;
 using Searchfight.Services.ApiClient.Interfaces;
-using System;
-using System.Net.Http;
-using System.Threading.Tasks;
 
 namespace Searchfight.Services.ApiClient
 {
-    public class BingSearchApiClient : BaseSearchApiClient, IGenericSearchApiClient<BingSearchApiResponse>
+    public class BingSearchApiClient : BaseSearchApiClient, IGenericSearchApiClient
     {
-        private readonly BingApi _bingSettings;
-        public BingSearchApiClient(HttpClient client, IOptions<BingApi> bingSettings) : base(client)
+        private string Cc;
+        public BingSearchApiClient(IOptions<BingApi> bingSettings)
         {
-            _bingSettings = bingSettings.Value;
-            BaseUri = $"{_bingSettings.Host}";
+            BaseUrl = bingSettings.Value.Host;
+            Key = bingSettings.Value.Key;
+            Cc = bingSettings.Value.Cc;
+            Name = bingSettings.Value.Name;
         }
 
-        public async Task<BingSearchApiResponse> GetResults(string query)
+        public QueryResult GetResults(string query)
         {
-            var request = new UriBuilder(BaseUri);
-            request.Query = $"key={_bingSettings.Key}&q={query}";
-            return await ExecuteGetAsync<BingSearchApiResponse>(request.Uri);
+            var request = new RestRequest($"/search?q={query}&customconfig={Cc}");
+            request.AddHeader("Ocp-Apim-Subscription-Key", Key);
+            request.AddHeader("Retry-After", "1");
+
+            var response = SendRequest<BingSearchApiResponse>(Method.GET, request);
+            var searchResult = new QueryResult
+            {
+                Engine = Name,
+                Query = query,
+                TotalResults = response.WebPages.TotalEstimatedMatches
+            };
+            return searchResult;
         }
     }
 }

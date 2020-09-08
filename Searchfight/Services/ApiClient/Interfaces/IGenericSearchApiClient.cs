@@ -1,9 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using Searchfight.Models;
 
 namespace Searchfight.Services.ApiClient.Interfaces
 {
-    public interface IGenericSearchApiClient<T>
+    public interface IGenericSearchApiClient
     {
-        Task<T> GetResults(string query);
+        QueryResult GetResults(string query);
     }
 }

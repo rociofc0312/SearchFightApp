@@ -1,21 +1,36 @@
-﻿using Searchfight.Models.Responses;
-using Searchfight.Services.ApiClient.Interfaces;
+﻿using Searchfight.IServices;
+using Searchfight.Models;
 using System;
-using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Searchfight
 {
     public class SearchFight
     {
-        private readonly IGenericSearchApiClient<GoogleSearchApiResponse> _googleApiClient;
-        public SearchFight(IGenericSearchApiClient<GoogleSearchApiResponse> googleApiClient)
+        public ISearchFightService _searchFightService { get; }
+        public IConsolePrintService _consolePrintService { get; }
+
+        public SearchFight(ISearchFightService searchFightService, IConsolePrintService consolePrintService)
         {
-            _googleApiClient = googleApiClient;
+            _searchFightService = searchFightService;
+            _consolePrintService = consolePrintService;
         }
-        public async Task RunAsync()
+
+        public void Run(string[] args)
         {
-            var result = await _googleApiClient.GetResults("lectures");
-            Console.WriteLine("Result: " + result.SearchInformation.TotalResults);
+            if (args.Length == 0)
+                Console.ReadLine()?.Split(" ");
+            ExecuteSearchFight(args);
+        }
+
+        private void ExecuteSearchFight(string[] args)
+        {
+            var results = _searchFightService.SearchQueries(args.ToList());
+            var winners = _searchFightService.QueryWinnersBySearchEngine(results);
+            var totalWinner = _searchFightService.GetTotalWinner(results);
+
+            _consolePrintService.BuildConsoleResponse(results, winners, totalWinner);
         }
     }
 }

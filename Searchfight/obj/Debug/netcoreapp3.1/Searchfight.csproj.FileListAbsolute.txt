@@ -10,7 +10,6 @@ C:\Users\ROCIO.FERNANDEZ\Documents\personal\Searchfight\Searchfight\obj\Debug\ne
 C:\Users\ROCIO.FERNANDEZ\Documents\personal\Searchfight\Searchfight\obj\Debug\netcoreapp3.1\Searchfight.pdb
 C:\Users\ROCIO.FERNANDEZ\Documents\personal\Searchfight\Searchfight\obj\Debug\netcoreapp3.1\Searchfight.genruntimeconfig.cache
 C:\Users\ROCIO.FERNANDEZ\Documents\personal\Searchfight\Searchfight\bin\Debug\netcoreapp3.1\appsettings.json
-C:\Users\ROCIO.FERNANDEZ\Documents\personal\Searchfight\Searchfight\obj\Debug\netcoreapp3.1\Searchfight.csprojAssemblyReference.cache
 C:\Users\ROCIO.FERNANDEZ\Documents\personal\Searchfight\Searchfight\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configuration.dll
 C:\Users\ROCIO.FERNANDEZ\Documents\personal\Searchfight\Searchfight\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configuration.Abstractions.dll
 C:\Users\ROCIO.FERNANDEZ\Documents\personal\Searchfight\Searchfight\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Primitives.dll
@@ -49,3 +48,5 @@ C:\Users\ROCIO.FERNANDEZ\Documents\personal\Searchfight\Searchfight\bin\Debug\ne
 C:\Users\ROCIO.FERNANDEZ\Documents\personal\Searchfight\Searchfight\bin\Debug\netcoreapp3.1\Serilog.Extensions.Logging.dll
 C:\Users\ROCIO.FERNANDEZ\Documents\personal\Searchfight\Searchfight\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Http.dll
 C:\Users\ROCIO.FERNANDEZ\Documents\personal\Searchfight\Searchfight\obj\Debug\netcoreapp3.1\Searchfight.csproj.CoreCompileInputs.cache
+C:\Users\ROCIO.FERNANDEZ\Documents\personal\Searchfight\Searchfight\bin\Debug\netcoreapp3.1\RestSharp.dll
+C:\Users\ROCIO.FERNANDEZ\Documents\personal\Searchfight\Searchfight\obj\Debug\netcoreapp3.1\Searchfight.csprojAssemblyReference.cache
